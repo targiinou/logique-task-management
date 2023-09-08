@@ -1,6 +1,7 @@
 package com.targinou.taskmanagement.user;
 
 
+import com.targinou.taskmanagement.task.Task;
 import com.targinou.taskmanagement.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

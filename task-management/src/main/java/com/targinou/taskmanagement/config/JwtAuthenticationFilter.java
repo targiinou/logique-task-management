@@ -2,6 +2,7 @@ package com.targinou.taskmanagement.config;
 
 
 import com.targinou.taskmanagement.token.TokenRepository;
+import com.targinou.taskmanagement.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(
@@ -59,6 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                var userId = jwtService.extractUserId(jwt);
+                userService.setCurrentUserId((Integer) userId);
             }
         }
         filterChain.doFilter(request, response);

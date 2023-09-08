@@ -8,3 +8,15 @@ Content-Type: application/json
    "password": "123456"
 }
 
+###
+
+POST http://localhost:8080/api/task
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsInN1YiI6ImVtYW51ZWxAZ21haWwuY29tIiwiaWF0IjoxNjk0MTkxODE5LCJleHAiOjE2OTQyNzgyMTl9.UL7t5aztPOD-DUl0oRir7eRn1MN7-RsZ9tu2XHJLuQQ
+
+{
+  "title":"Tarefa 2",
+  "description":"Tarefa de teste 2"
+}
+
