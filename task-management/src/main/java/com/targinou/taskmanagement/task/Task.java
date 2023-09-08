@@ -21,6 +21,9 @@ public class Task {
 
     private String title;
     private String description;
+
+    @Column
+    @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
     @ManyToOne

@@ -21,14 +21,14 @@ public class TaskController {
     }
 
     @GetMapping("/list")
-    public GenericView<List<Task>> getAllTasks() {
-        List<Task> tasks = taskService.getAllTasks();
+    public GenericView<List<TaskDTO>> getAllTasks() {
+        List<TaskDTO> tasks = taskService.getAllTasks();
         return GenericView.ok(tasks);
     }
 
     @PutMapping("/{taskId}/update-status")
-    public GenericView<Task> updateTaskStatus(@PathVariable Integer taskId, @RequestParam TaskStatus newStatus) {
-        Task updatedTask = taskService.updateTaskStatus(taskId, newStatus);
+    public GenericView<Task> updateTaskStatus(@PathVariable Integer taskId, @RequestParam String newStatus) {
+        Task updatedTask = taskService.updateTaskStatus(taskId, TaskStatus.valueOf(newStatus));
         return GenericView.ok(updatedTask);
     }
 
