@@ -50,21 +50,57 @@ body .body-home {
 }
 
 .description {
-    grid-column: span 4; 
+    grid-column: span 3; 
 }
 
 .status {
     grid-column: span 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
 }
 
 .options {
     grid-column: span 1;
+    display: flex;
+    justify-content: flex-end;
 }
 
+.action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px; /* Defina a largura e altura iguais para criar um círculo */
+    height: 40px; /* Defina a largura e altura iguais para criar um círculo */
+    color: #fff;
+    background: #8252d0;
+    border-radius: 50%; /* Defina o raio igual a 50% para criar um círculo perfeito */
+    border: transparent;
+    font-size: 15.2px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+  }
 
+  .create-task-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 176px;
+    height: 47.2px;
+    color: #fff;
+    background: #8252d0;
+    border-radius: 44px;
+    border: transparent;
+    font-size: 15.2px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 1s ease;
+}
 
-
-
+  .create-task-button:hover {
+    background: #624093; 
+}
 
 .card-column {
     margin: 10px 10px;
@@ -74,4 +110,15 @@ body .body-home {
 .columns-container {
     
 }
+
+.link-no-underline {
+    text-decoration: none;
+}
+
+.icon-large {
+    font-size: 24px; 
+    margin-right: 5px;
+  }
+  
+  
 

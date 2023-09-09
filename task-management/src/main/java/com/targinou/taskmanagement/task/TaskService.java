@@ -28,7 +28,7 @@ public class TaskService {
     public List<TaskDTO> getAllTasks() {
         //var user = userService.getCurrentUser().orElseThrow();
 
-        return taskRepository.findAllTaskDTOByStatusNotAndUserId(String.valueOf(TaskStatus.ARCHIVED), 1);
+        return taskRepository.findAllTaskDTOByStatusNotAndUserId(1);
     }
 
     public Task updateTaskStatus(Integer taskId, TaskStatus newStatus) {

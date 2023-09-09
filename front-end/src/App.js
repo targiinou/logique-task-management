@@ -3,6 +3,7 @@ import { LoginSignup } from './Components/LoginSignup/LoginSignup';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Home } from './Components/Home/Home'
 import { CreateTask } from './Components/CreateTask/CreateTask';
+import { ArchivedTasksList } from './Components/ArchivedTasksList/ArchivedTasksList';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/' element={<Navigate to='/login' />} />
         <Route path='/home' element={<Home/>} />
         <Route path='/create-task' element={<CreateTask/>} />
+        <Route path='/tarefas-arquivadas' element={<ArchivedTasksList/>} />
       </Routes>
     </BrowserRouter>
   );

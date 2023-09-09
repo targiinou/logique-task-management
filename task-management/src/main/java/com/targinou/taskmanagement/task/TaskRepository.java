@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-    @Query(value = "SELECT id, description, status, title FROM task WHERE status != :status AND user_id = :userId", nativeQuery = true)
-    List<Object[]> findAllByStatusNotAndUserId(String status, Integer userId);
+    @Query(value = "SELECT id, description, status, title FROM task WHERE user_id = :userId", nativeQuery = true)
+    List<Object[]> findAllByUserId(Integer userId);
 
-    default List<TaskDTO> findAllTaskDTOByStatusNotAndUserId(String status, Integer userId) {
-        List<Object[]> results = findAllByStatusNotAndUserId(status, userId);
+    default List<TaskDTO> findAllTaskDTOByStatusNotAndUserId(Integer userId) {
+        List<Object[]> results = findAllByUserId(userId);
         List<TaskDTO> taskDTOs = new ArrayList<>();
 
         for (Object[] row : results) {
