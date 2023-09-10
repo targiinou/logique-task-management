@@ -73,53 +73,56 @@ export const LoginSignup = ({ initialAction  }) => {
 
 
     return (
-        <div className='container'>
-            <div className='header'>
-                <div className='text'>{action === "Login" ? "Entrar" : "Registrar"}</div>
-                <div className='underline'></div>
-            </div>
-            <div className='inputs'>
-                {action==="Login" ? <div></div> : 
-                <div className='input'>
-                    <img src={user_icon} alt=''/>
-                    <input 
-                        type='text' 
-                        placeholder='Nome'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>}
-                <div className='input'>
-                    <img src={email_icon} alt=''/>
-                    <input 
-                        type='email' 
-                        placeholder='Email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+        <div className='login-signup-container'>
+            <div className='container'>
+                <div className='header'>
+                    <div className='text'>{action === "Login" ? "Entrar" : "Registrar"}</div>
+                    <div className='underline'></div>
                 </div>
-                <div className='input'>
-                    <img src={password_icon} alt=''/>
-                    <input 
-                        type='password' 
-                        placeholder='Senha'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <div className='inputs'>
+                    {action==="Login" ? <div></div> : 
+                    <div className='input'>
+                        <img src={user_icon} alt=''/>
+                        <input 
+                            type='text' 
+                            placeholder='Nome'
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>}
+                    <div className='input'>
+                        <img src={email_icon} alt=''/>
+                        <input 
+                            type='email' 
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className='input'>
+                        <img src={password_icon} alt=''/>
+                        <input 
+                            type='password' 
+                            placeholder='Senha'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
                 </div>
-            </div>
-            {action==="Sign Up" ? <div></div> : 
-            <div className="forgot-password">Esqueceu a senha? <span>Clique aqui!</span></div>}
-            <div className='submit-container'>
-                <div className={`${
-                        action === 'Login' || isLoading ? 'gray' : 'submit'
-                    } ${isLoading ? 'disabled' : ''}`}
-                    onClick={handleRegisterButtonClick}>Registre-se</div>
-                <div className={`${
-                        action === 'Sign Up' || isLoading ? 'gray' : 'submit'
-                    } ${isLoading ? 'disabled' : ''}`}
-                    onClick={handleLoginButtonClick}>Entrar</div>
+                {action==="Sign Up" ? <div></div> : 
+                <div className="forgot-password">Esqueceu a senha? <span>Clique aqui!</span></div>}
+                <div className='submit-container'>
+                    <div className={`${
+                            action === 'Login' || isLoading ? 'gray' : 'submit'
+                        } ${isLoading ? 'disabled' : ''}`}
+                        onClick={handleRegisterButtonClick}>Registre-se</div>
+                    <div className={`${
+                            action === 'Sign Up' || isLoading ? 'gray' : 'submit'
+                        } ${isLoading ? 'disabled' : ''}`}
+                        onClick={handleLoginButtonClick}>Entrar</div>
+                </div>
             </div>
         </div>
+        
     )
 }

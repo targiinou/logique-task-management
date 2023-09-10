@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import _ from 'lodash';
+import { AiFillEye } from "react-icons/ai";
+import { Link } from 'react-router-dom';
 
 export const ArchivedTasksList = () => {
   const [archivedTasks, setArchivedTasks] = useState([]);
@@ -45,24 +46,43 @@ export const ArchivedTasksList = () => {
   };
 
   return (
-    <div className='archived-tasks'>
-      {isLoading ? (
-        <p>Carregando...</p>
-      ) : (
-        <div className='columns-container'>
-          <div className='card-column'>
-            <h2>{parseTaskStatus('ARCHIVED')}</h2>
-            {archivedTasks.map((task) => (
-              <div className='task-card' key={task.id}>
-                <div className='card-title'>{task.title}</div>
-                <div className='status'>{parseTaskStatus(task.status)}</div>
-                <div className='description'>{task.description}</div>
-              </div>
-            ))}
+    <body className='main-container'>
+      <div className='header-home'>
+        <div className='header-title'>Gerenciador de tarefas</div>
+      </div>
+      <div className='container-title'>
+        <div className='page-title'>
+          <h1>Tarefas arquivadas</h1>
+          <div className='button-container'>
+            <Link className="link-no-underline" to="/home">
+              <button className='create-task-button'><AiFillEye className='icon-large'/>Ver tarefas</button>
+            </Link>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+
+      <div className='task-list'>
+        {isLoading ? (
+          <p>Carregando...</p>
+        ) : (
+          <div className='columns-container'>
+            <div className='card-column'>
+              <h2>{parseTaskStatus('ARCHIVED')}</h2>
+              {archivedTasks.length === 0 ? ( // Verifique se a lista está vazia
+                <div className='empty-message'>Ainda não há tarefas com o status: {parseTaskStatus('ARCHIVED')}</div>
+              ) : (
+                archivedTasks.map((task) => (
+                  <div className='task-card' key={task.id}>
+                    <div className='card-title'>{task.title}</div>
+                    <div className='status'>{parseTaskStatus(task.status)}</div>
+                    <div className='description'>{task.description}</div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </body>
   );
 };
-

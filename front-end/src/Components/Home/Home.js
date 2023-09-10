@@ -1,39 +1,63 @@
 import './Home.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import _ from 'lodash';
 import { VscDebugStart, VscDebugRestart } from "react-icons/vsc";
 import { BsFileEarmarkExcelFill } from "react-icons/bs";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { IoIosAddCircle } from "react-icons/io";
-
-
+import CreateTaskModal from '../CreateTaskModal/CreateTaskModal';
 
 export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/task/list');
-        const result = response.data;
-
-        if (result.resultType === 'OK') {
-          const taskList = result.result.filter((task) => task.status !== 'ARCHIVED');
-          setTasks(taskList);
-        } else {
-          console.error('Erro na resposta:', result.resultMessage);
-        }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Erro ao buscar tarefas:', error);
-        setIsLoading(false);
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 0) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
       }
     };
 
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/task/list');
+      const result = response.data;
+
+      if (result.resultType === 'OK') {
+        const taskList = result.result.filter((task) => task.status !== 'ARCHIVED');
+        setTasks(taskList);
+      } else {
+        console.error('Erro na resposta:', result.resultMessage);
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar tarefas:', error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -49,11 +73,7 @@ export const Home = () => {
         }
       );
 
-      const updatedTasks = tasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task
-      );
-
-      setTasks(updatedTasks);
+      fetchTasks();
     } catch (error) {
       console.error('Erro ao alterar o status da tarefa:', error);
     }
@@ -88,32 +108,31 @@ export const Home = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchTasksAgain = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/task/list');
-        const result = response.data;
-
-        if (result.resultType === 'OK') {
-          const taskList = result.result.filter((task) => task.status !== 'ARCHIVED');
-          setTasks(taskList);
-        } else {
-          console.error('Erro na resposta:', result.resultMessage);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar tarefas:', error);
-      }
-    };
-
-    fetchTasksAgain();
-  }, [tasks]);
-
   return (
-    <body className='body-home'>
-      <div className='header-home'></div>
-      <Link className="link-no-underline" to="/create-task">
-        <button className='create-task-button'><IoIosAddCircle className='icon-large'/>Criar Tarefa</button>
-      </Link>
+    <div className='main-container'>
+      <div className={`header-home ${isSticky ? 'sticky-header' : ''}`}>
+        <div className='header-title'>Gerenciador de tarefas</div>
+      </div>
+      <div className='container-title'>
+        <div className='page-title'>
+          <h1>Lista de tarefas</h1>
+          <div className='button-container'>
+            <Link className="link-no-underline" onClick={openModal} style={{ marginRight: '10px' }}>
+              <button className='create-task-button'><IoIosAddCircle className='icon-large'/>Criar Tarefa</button>
+            </Link>
+            <CreateTaskModal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              className="modal-container" // Adicione esta classe ao modal
+            />
+
+            <Link className="link-no-underline" to="/tarefas-arquivadas">
+              <button className='create-task-button'><AiFillEye className='icon-large'/>Ver arquivadas</button>
+            </Link>
+          </div>
+        </div>
+      </div>
+        
       <div className='task-list'>
         {isLoading ? (
           <p>Carregando...</p>
@@ -133,34 +152,37 @@ export const Home = () => {
                         {task.status === 'NOT_STARTED' && (
                           <>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'IN_PROGRESS')}>
-                                <VscDebugStart/>
+                              <VscDebugStart />
                             </button>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'FINISHED')}>
-                                <AiOutlineCheck/>
+                              <AiOutlineCheck />
                             </button>
                           </>
                         )}
                         {task.status === 'IN_PROGRESS' && (
                           <>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'NOT_STARTED')}>
-                                <VscDebugRestart/>
+                              <VscDebugRestart />
                             </button>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'FINISHED')}>
-                                <AiOutlineCheck/>
+                              <AiOutlineCheck />
                             </button>
                           </>
                         )}
                         {task.status !== 'FINALIZED' && (
-                          <button className='action-button' onClick={() => archiveTask(task.id)}><BsFileEarmarkExcelFill/></button>
+                          <button className='action-button' onClick={() => archiveTask(task.id)}><BsFileEarmarkExcelFill /></button>
                         )}
                       </div>
                     </div>
                   ))}
+                  {tasks.filter((task) => task.status === status).length === 0 && (
+                  <div className='empty-message'>Ainda não tarefas com o status: {parseTaskStatus(status)}</div>
+                  )}
               </div>
             ))}
           </div>
         )}
       </div>
-    </body>
+    </div>
   );
 };

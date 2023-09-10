@@ -1,5 +1,56 @@
-body .body-home {
+ .main-container {
     background: #E9EBF2;
+    min-height: 94.8vh;
+    height: auto;
+    padding-bottom: 50px;
+}
+
+.header-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    width: 100%;
+    height: 100px;
+    background: rgb(114,92,196);
+    background: radial-gradient(circle, rgba(114,92,196,1) 0%, rgba(169,99,213,1) 100%);  
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+}
+  
+.modal-container {
+    position: fixed;
+    z-index: 2000;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    
+}
+
+.container-title {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+}
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    width: 100vh;
+    align-items: center;
 }
 
 .task-list {
@@ -8,25 +59,15 @@ body .body-home {
     justify-content: center;
 }
 
-.header-home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    width: 100%;
-    height: 100px;
-    background: rgb(114,92,196);
-    background: radial-gradient(circle, rgba(114,92,196,1) 0%, rgba(169,99,213,1) 100%);    
-}
+
 
 .list-card-container {
     width: 100%;
     margin-top: 50px;
-    
 }
 
 .task-card {
-    font-family: 'Roboto';
+    font-family: 'Roboto', serif;
     font-size: 17px;
     background: #fff;
     margin-bottom: 10px;
@@ -37,12 +78,14 @@ body .body-home {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, auto); 
     gap: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
 }
 
 .task-card:hover {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
 
 .card-title {
     grid-column: span 3;
@@ -66,15 +109,29 @@ body .body-home {
     justify-content: flex-end;
 }
 
+.empty-message {
+    font-family: 'Roboto', serif;
+    font-size: 17px;
+    font-weight: 700;
+    background: #fff;
+    margin-bottom: 10px;
+    border: transparent;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .action-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Defina a largura e altura iguais para criar um círculo */
-    height: 40px; /* Defina a largura e altura iguais para criar um círculo */
+    width: 40px;
+    height: 40px;
     color: #fff;
     background: #8252d0;
-    border-radius: 50%; /* Defina o raio igual a 50% para criar um círculo perfeito */
+    border-radius: 50%;
     border: transparent;
     font-size: 15.2px;
     font-weight: 700;
@@ -107,10 +164,6 @@ body .body-home {
     width: 100vh;
 }
 
-.columns-container {
-    
-}
-
 .link-no-underline {
     text-decoration: none;
 }
@@ -118,7 +171,7 @@ body .body-home {
 .icon-large {
     font-size: 24px; 
     margin-right: 5px;
-  }
+}
   
   
 

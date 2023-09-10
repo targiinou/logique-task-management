@@ -1,7 +1,10 @@
-body {
-    background: rgb(114,92,196);
-    background: linear-gradient(180deg, rgba(114,92,196,1) 0%, rgba(149,68,200,1) 91%);
-}
+.login-signup-container {
+    background: rgb(114, 92, 196);
+    background: linear-gradient(180deg, rgba(114, 92, 196, 1) 0%, rgba(149, 68, 200, 1) 91%);
+    height: 100vh;
+    display: flex;
+  }
+  
 
 
 .container {
@@ -54,7 +57,7 @@ body {
 }
 
 .input img {
-    margin: 0px 24px; 
+    margin: 0 24px;
 }
 
 .input input {
