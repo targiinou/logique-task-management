@@ -68,20 +68,6 @@ public class TaskService {
         return TaskDTO.from(taskRepository.save(task));
     }
 
-    public void deleteTask(Integer taskId) {
-        hasPermission(taskId);
-        Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new ValidationException("Tarefa não encontrada"));
-
-        TaskStatus currentStatus = task.getStatus();
-
-        if (currentStatus == TaskStatus.ARCHIVED || currentStatus == TaskStatus.FINISHED) {
-            throw new ValidationException("Tarefa não pode ser excluída");
-        }
-
-        taskRepository.delete(task);
-    }
-
     public TaskDTO archiveTask(Integer taskId) {
         hasPermission(taskId);
         Task task = taskRepository.findById(taskId)

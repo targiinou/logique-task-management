@@ -31,12 +31,6 @@ public class TaskController {
         return GenericView.ok(taskService.updateTaskStatus(taskId, TaskStatus.valueOf(newStatus)));
     }
 
-    @DeleteMapping("/{taskId}")
-    public GenericView<Void> deleteTask(@PathVariable Integer taskId) {
-        taskService.deleteTask(taskId);
-        return GenericView.ok();
-    }
-
     @PutMapping("/{taskId}/archive")
     public GenericView<TaskDTO> archiveTask(@PathVariable Integer taskId) {
         return GenericView.ok(taskService.archiveTask(taskId));
