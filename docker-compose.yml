@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  banco-dados:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=logique
+      - POSTGRES_USER=targinou
+      - POSTGRES_PASSWORD=12345678
+
+  backend:
+    image: "api"
+    container_name: api-task-manager
+    ports:
+      - "8080:8080"
+    links: 
+      - banco-dados
+
+  frontend:
+    image: frontend
+    container_name: frontend-task-manager
+    ports:
+      - "3000:3000"
+    links: 
+      - backend
