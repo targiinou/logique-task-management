@@ -1,12 +1,13 @@
 import './Home.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { VscDebugStart, VscDebugRestart } from "react-icons/vsc";
 import { BsFileEarmarkExcelFill } from "react-icons/bs";
 import { AiOutlineCheck, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { IoIosAddCircle } from "react-icons/io";
+import { ImExit } from "react-icons/im";
 import CreateTaskModal from '../CreateTaskModal/CreateTaskModal';
+import axiosInstance from '../../Interceptors/axiosInstance';
 
 export const Home = () => {
   const [tasks, setTasks] = useState([]);
@@ -40,7 +41,7 @@ export const Home = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/task/list');
+      const response = await axiosInstance.get('task/list');
       const result = response.data;
 
       if (result.resultType === 'OK') {
@@ -61,12 +62,14 @@ export const Home = () => {
     fetchTasks();
   }, []);
 
+
+
   const statusOrder = ['NOT_STARTED', 'IN_PROGRESS', 'FINISHED'];
 
   const changeTaskStatus = async (taskId, newStatus) => {
     try {
-      await axios.put(
-        `http://localhost:8080/api/task/${taskId}/update-status`,
+      await axiosInstance.put(
+        `http://localhost:8080/api/v1/task/${taskId}/update-status`,
         null,
         {
           params: { newStatus },
@@ -81,8 +84,8 @@ export const Home = () => {
 
   const archiveTask = async (taskId) => {
     try {
-      await axios.put(
-        `http://localhost:8080/api/task/${taskId}/archive`
+      await axiosInstance.put(
+        `http://localhost:8080/api/v1/task/${taskId}/archive`
       );
 
       const updatedTasks = tasks.filter((task) => task.id !== taskId);
@@ -108,10 +111,24 @@ export const Home = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    window.location.href = '/login';
+  };
+
   return (
     <div className='main-container'>
       <div className={`header-home ${isSticky ? 'sticky-header' : ''}`}>
+        <div></div>
         <div className='header-title'>Gerenciador de tarefas</div>
+        <div className='logout-button-container'>
+          <button className='logout-button-area logout-button' onClick={handleLogout}>
+            <ImExit className='logout-icon'/>
+            <span>Sair</span>
+          </button>
+        </div>
+        
       </div>
       <div className='container-title'>
         <div className='page-title'>

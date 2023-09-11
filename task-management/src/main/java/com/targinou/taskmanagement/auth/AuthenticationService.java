@@ -111,12 +111,12 @@ public class AuthenticationService {
 
     private void validateUser(RegisterForm form) {
 
-        if (Util.isEmpty(form.getEmail())) {
-            throw new ValidationException("O email deve ser informado.");
-        }
-
         if (Util.isEmpty(form.getName())) {
             throw new ValidationException("O nome deve ser informado.");
+        }
+
+        if (Util.isEmpty(form.getEmail())) {
+            throw new ValidationException("O email deve ser informado.");
         }
 
         if (Util.isEmpty(form.getPassword())) {

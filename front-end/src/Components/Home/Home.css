@@ -6,7 +6,7 @@
 }
 
 .header-home {
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
     margin-bottom: 25px;
@@ -16,6 +16,8 @@
     height: 100px;
     background: rgb(114,92,196);
     background: radial-gradient(circle, rgba(114,92,196,1) 0%, rgba(169,99,213,1) 100%);  
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, auto); 
 }
 
 .sticky-header {
@@ -34,7 +36,49 @@
     color: #fff;
     font-size: 22px;
     font-weight: 700;
-    
+    grid-column: span 1;
+    display: flex;
+    justify-content: center;
+}
+
+.error-message-auth {
+    font-size: 15px;
+    color: #c90000;
+    font-weight: 400;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.logout-icon {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.logout-button {
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.logout-button-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: #fff;
+    padding-right: 50px;
+}
+
+.logout-button-area {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
 }
 
 .container-title {
@@ -60,14 +104,12 @@
 }
 
 
-
 .list-card-container {
     width: 100%;
     margin-top: 50px;
 }
 
 .task-card {
-    font-family: 'Roboto', serif;
     font-size: 17px;
     background: #fff;
     margin-bottom: 10px;
@@ -89,10 +131,18 @@
     grid-column: span 3;
 }
 
+
 .card-title {
     font-weight: 700;
     margin-bottom: 10px;
 }
+
+.description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .options {
     grid-column: span 1;
@@ -129,7 +179,6 @@
   }
 
 .empty-message {
-    font-family: 'Roboto', serif;
     font-size: 17px;
     font-weight: 700;
     background: #fff;
@@ -180,7 +229,7 @@
     transition: background-color 1s ease;
 }
 
-  .create-task-button:hover {
+.create-task-button:hover {
     background: #624093; 
 }
 

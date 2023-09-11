@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../Interceptors/axiosInstance';
+import { ImExit } from "react-icons/im";
 
 export const ArchivedTasksList = () => {
   const [archivedTasks, setArchivedTasks] = useState([]);
@@ -10,7 +11,7 @@ export const ArchivedTasksList = () => {
   useEffect(() => {
     const fetchArchivedTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/task/list');
+        const response = await axiosInstance.get('/task/list');
         const result = response.data;
 
         if (result.resultType === 'OK') {
@@ -45,10 +46,23 @@ export const ArchivedTasksList = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    window.location.href = '/login';
+  };
+
   return (
     <body className='main-container'>
       <div className='header-home'>
+        <div></div>
         <div className='header-title'>Gerenciador de tarefas</div>
+        <div className='logout-button-container'>
+          <button className='logout-button-area logout-button' onClick={handleLogout}>
+            <ImExit className='logout-icon'/>
+            <span>Sair</span>
+          </button>
+        </div>
       </div>
       <div className='container-title'>
         <div className='page-title'>

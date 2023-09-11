@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/task")
+@RequestMapping("/api/v1/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -20,6 +20,7 @@ public class TaskController {
         return GenericView.ok(taskService.createTask(task));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/list")
     public GenericView<List<TaskDTO>> getAllTasks() {
         return GenericView.ok(taskService.getAllTasks());

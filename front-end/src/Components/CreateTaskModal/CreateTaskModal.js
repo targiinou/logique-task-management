@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './CreateTaskModal.css';
 import { GrClose } from 'react-icons/gr';
-import axios from 'axios';
+import axiosInstance from '../../Interceptors/axiosInstance';
 
 const CreateTaskModal = ({ isOpen, onRequestClose }) => {
   const [title, setTitle] = useState('');
@@ -27,10 +27,12 @@ const CreateTaskModal = ({ isOpen, onRequestClose }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/task', {
+      const response = await axiosInstance.post('/task', {
         title,
         description,
       });
+
+      console.log(response)
 
       if (response && response.data && response.data.resultType === 'OK') {
         setTitle('');
@@ -40,6 +42,7 @@ const CreateTaskModal = ({ isOpen, onRequestClose }) => {
         setTimeout(() => {
           setShowSuccessMessage(false);
           setErrorMessage('');
+          window.location.reload(); 
           onRequestClose();
         }, 1000);
       } else {
