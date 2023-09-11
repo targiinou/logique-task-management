@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './CreateTaskModal.css';
 import { GrClose } from 'react-icons/gr';
 import axios from 'axios';
@@ -10,6 +10,14 @@ const CreateTaskModal = ({ isOpen, onRequestClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const areFieldsFilled = useCallback(() => {
+    return title.trim() !== '' && description.trim() !== '';
+  }, [title, description]);
+
+  useEffect(() => {
+    setIsButtonDisabled(!areFieldsFilled());
+  }, [title, description, areFieldsFilled]);
 
   const handleCreateTask = async () => {
     if (isButtonDisabled || isSubmitting) {
@@ -31,6 +39,7 @@ const CreateTaskModal = ({ isOpen, onRequestClose }) => {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
+          setErrorMessage('');
           onRequestClose();
         }, 1000);
       } else {
@@ -43,14 +52,6 @@ const CreateTaskModal = ({ isOpen, onRequestClose }) => {
       setIsSubmitting(false);
     }
   };
-
-  const areFieldsFilled = () => {
-    return title.trim() !== '' && description.trim() !== '';
-  };
-
-  useEffect(() => {
-    setIsButtonDisabled(!areFieldsFilled());
-  }, [title, description]);
 
   const handleCloseModal = () => {
     setErrorMessage('');

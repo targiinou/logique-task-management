@@ -89,16 +89,10 @@
     grid-column: span 3;
 }
 
-
 .card-title {
     font-weight: 700;
     margin-bottom: 10px;
 }
-
-.description {
-   
-}
-
 
 .options {
     grid-column: span 1;

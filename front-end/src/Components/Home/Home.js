@@ -65,7 +65,7 @@ export const Home = () => {
 
   const changeTaskStatus = async (taskId, newStatus) => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:8080/api/task/${taskId}/update-status`,
         null,
         {
@@ -81,7 +81,7 @@ export const Home = () => {
 
   const archiveTask = async (taskId) => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:8080/api/task/${taskId}/archive`
       );
 
