@@ -145,17 +145,21 @@ export const Home = () => {
                   .filter((task) => task.status === status)
                   .map((task) => (
                     <div className='task-card' key={task.id}>
-                      <div className='card-title'>{task.title}</div>
-                      <div className='status'>{parseTaskStatus(task.status)}</div>
-                      <div className='description'>{task.description}</div>
+                      <div className='grid-container'>
+                        <div className='card-title'>{task.title}</div>
+                        <div className='description'>{task.description}</div>
+                      </div>
+                      
                       <div className='options'>
                         {task.status === 'NOT_STARTED' && (
                           <>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'IN_PROGRESS')}>
                               <VscDebugStart />
+                              <span className='status-popup'>Iniciar</span>
                             </button>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'FINISHED')}>
                               <AiOutlineCheck />
+                              <span className='status-popup'>Finalizar</span>
                             </button>
                           </>
                         )}
@@ -163,14 +167,21 @@ export const Home = () => {
                           <>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'NOT_STARTED')}>
                               <VscDebugRestart />
+                              <span className='status-popup'>Não iniciada</span>
                             </button>
                             <button className='action-button' onClick={() => changeTaskStatus(task.id, 'FINISHED')}>
                               <AiOutlineCheck />
+                              <span className='status-popup'>Finalizar</span>
                             </button>
                           </>
                         )}
                         {task.status !== 'FINALIZED' && (
-                          <button className='action-button' onClick={() => archiveTask(task.id)}><BsFileEarmarkExcelFill /></button>
+                          <>
+                            <button className='action-button' onClick={() => archiveTask(task.id)}>
+                              <BsFileEarmarkExcelFill />
+                              <span className='status-popup'>Arquivar</span>
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>

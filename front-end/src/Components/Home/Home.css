@@ -77,7 +77,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, auto); 
-    gap: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
 }
@@ -86,28 +85,54 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.grid-container {
+    grid-column: span 3;
+}
+
 
 .card-title {
-    grid-column: span 3;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .description {
-    grid-column: span 3; 
+   
 }
 
-.status {
-    grid-column: span 1;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 10px;
-}
 
 .options {
     grid-column: span 1;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    position: relative;
 }
+
+.status-popup {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none;
+  }
+  
+  .action-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .action-button:hover .status-popup {
+    display: block;
+    
+  }
 
 .empty-message {
     font-family: 'Roboto', serif;
@@ -124,6 +149,7 @@
 }
 
 .action-button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -137,6 +163,11 @@
     font-weight: 700;
     cursor: pointer;
     margin-right: 10px;
+    transition: background-color 0.3s;
+  }
+
+  .action-button:hover {
+    background-color: #6b3eaa;
   }
 
   .create-task-button {

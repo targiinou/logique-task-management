@@ -73,9 +73,10 @@ export const ArchivedTasksList = () => {
               ) : (
                 archivedTasks.map((task) => (
                   <div className='task-card' key={task.id}>
-                    <div className='card-title'>{task.title}</div>
-                    <div className='status'>{parseTaskStatus(task.status)}</div>
-                    <div className='description'>{task.description}</div>
+                    <div className='grid-container'>
+                      <div className='card-title'>{task.title}</div>
+                      <div className='description'>{task.description}</div>
+                    </div>
                   </div>
                 ))
               )}
