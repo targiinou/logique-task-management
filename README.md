@@ -1,6 +1,6 @@
 # Executando o Docker Compose para o Projeto Task Management
 
-Este repositório contém um arquivo `docker-compose.yml` que configura um ambiente de desenvolvimento com um banco de dados PostgreSQL, um backend (API) e um frontend React. Siga as etapas abaixo para construir e executar o projeto.
+Este repositório contém um arquivo `docker-compose.yml` que configura um ambiente de desenvolvimento com um banco de dados PostgreSQL, uma API Java e um frontend React. Siga as etapas abaixo para construir e executar o projeto.
 
 ## Pré-requisitos
 
