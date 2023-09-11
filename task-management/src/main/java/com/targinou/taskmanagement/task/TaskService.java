@@ -22,20 +22,21 @@ public class TaskService {
     public TaskDTO createTask(TaskDTO taskDTO) {
         validateDTO(taskDTO);
         taskDTO.setStatus(TaskStatus.NOT_STARTED);
-        var taskSaved = taskRepository.save(Task.from(taskDTO));
+        var task = Task.from(taskDTO);
+        task.setUser(userService.getCurrentUser().orElseThrow());
+        var taskSaved = taskRepository.save(task);
         taskDTO.setId(taskSaved.getId());
         return taskDTO;
     }
 
     public List<TaskDTO> getAllTasks() {
-        //var user = userService.getCurrentUser().orElseThrow();
-
-        return taskRepository.findAllTaskDTOByStatusNotAndUserId(1);
+        var user = userService.getCurrentUser().orElseThrow();
+        return taskRepository.findAllTaskDTOByStatusNotAndUserId(user.getId());
     }
 
     public TaskDTO updateTaskStatus(Integer taskId, TaskStatus newStatus) {
 
-        //hasPermission(taskId);
+        hasPermission(taskId);
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ValidationException("Tarefa não encontrada"));
@@ -82,7 +83,7 @@ public class TaskService {
     }
 
     public TaskDTO archiveTask(Integer taskId) {
-        //hasPermission(taskId);
+        hasPermission(taskId);
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ValidationException("Tarefa não encontrada"));
 

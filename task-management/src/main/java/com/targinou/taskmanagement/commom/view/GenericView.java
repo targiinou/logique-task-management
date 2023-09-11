@@ -1,6 +1,7 @@
 package com.targinou.taskmanagement.commom.view;
 
 
+
 import com.targinou.taskmanagement.commom.enums.ResultType;
 import lombok.Builder;
 import lombok.Data;

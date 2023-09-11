@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationForm {
-    private String email;
-    private String password;
+  private String email;
+  String password;
 }
