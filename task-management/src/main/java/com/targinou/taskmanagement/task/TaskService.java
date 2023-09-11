@@ -1,6 +1,7 @@
 package com.targinou.taskmanagement.task;
 
 import com.targinou.taskmanagement.commom.exception.ValidationException;
+import com.targinou.taskmanagement.commom.util.Util;
 import com.targinou.taskmanagement.user.UserService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class TaskService {
     }
 
     public TaskDTO createTask(TaskDTO taskDTO) {
+        validateDTO(taskDTO);
         taskDTO.setStatus(TaskStatus.NOT_STARTED);
         var taskSaved = taskRepository.save(Task.from(taskDTO));
         taskDTO.setId(taskSaved.getId());
@@ -31,7 +33,7 @@ public class TaskService {
         return taskRepository.findAllTaskDTOByStatusNotAndUserId(1);
     }
 
-    public Task updateTaskStatus(Integer taskId, TaskStatus newStatus) {
+    public TaskDTO updateTaskStatus(Integer taskId, TaskStatus newStatus) {
 
         //hasPermission(taskId);
 
@@ -62,7 +64,7 @@ public class TaskService {
             throw new ValidationException("Tarefa finalizada não pode ser atualizada");
         }
 
-        return taskRepository.save(task);
+        return TaskDTO.from(taskRepository.save(task));
     }
 
     public void deleteTask(Integer taskId) {
@@ -79,17 +81,37 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
-    public Task archiveTask(Integer taskId) {
+    public TaskDTO archiveTask(Integer taskId) {
         //hasPermission(taskId);
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ValidationException("Tarefa não encontrada"));
 
-        if (task.getStatus() != TaskStatus.ARCHIVED) {
-            task.setStatus(TaskStatus.ARCHIVED);
-            return taskRepository.save(task);
+        if (task.getStatus() == TaskStatus.ARCHIVED) {
+            throw new ValidationException("Essa tarefa já está arquivada.");
         }
 
-        return task;
+        task.setStatus(TaskStatus.ARCHIVED);
+        return TaskDTO.from(taskRepository.save(task));
+    }
+
+    private void validateDTO(TaskDTO taskDTO) {
+
+        if (Util.isEmpty(taskDTO.getTitle())){
+            throw new ValidationException("O titulo da tarefa não pode ser nulo.");
+        }
+
+        if (Util.isEmpty(taskDTO.getDescription())){
+            throw new ValidationException("A descrição da tarefa não pode ser nulo.");
+        }
+
+        if (taskDTO.getTitle().length() > 30) {
+            throw new ValidationException("O titulo pode conter no máximo 30 caracteres.");
+        }
+
+        if (taskDTO.getDescription().length() > 255) {
+            throw new ValidationException("A descrição pode conter no máximo 255 caracteres.");
+        }
+
     }
 
     private void hasPermission(Integer taksId) {
@@ -99,5 +121,6 @@ public class TaskService {
             throw new ValidationException("O usuário logado não tem permissão para modificar essa tarefa.");
         }
     }
+
 }
 

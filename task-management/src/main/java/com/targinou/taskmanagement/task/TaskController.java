@@ -22,14 +22,12 @@ public class TaskController {
 
     @GetMapping("/list")
     public GenericView<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> tasks = taskService.getAllTasks();
-        return GenericView.ok(tasks);
+        return GenericView.ok(taskService.getAllTasks());
     }
 
     @PutMapping("/{taskId}/update-status")
-    public GenericView<Task> updateTaskStatus(@PathVariable Integer taskId, @RequestParam String newStatus) {
-        Task updatedTask = taskService.updateTaskStatus(taskId, TaskStatus.valueOf(newStatus));
-        return GenericView.ok(updatedTask);
+    public GenericView<TaskDTO> updateTaskStatus(@PathVariable Integer taskId, @RequestParam String newStatus) {
+        return GenericView.ok(taskService.updateTaskStatus(taskId, TaskStatus.valueOf(newStatus)));
     }
 
     @DeleteMapping("/{taskId}")
@@ -39,9 +37,8 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}/archive")
-    public GenericView<Task> archiveTask(@PathVariable Integer taskId) {
-        Task archivedTask = taskService.archiveTask(taskId);
-        return GenericView.ok(archivedTask);
+    public GenericView<TaskDTO> archiveTask(@PathVariable Integer taskId) {
+        return GenericView.ok(taskService.archiveTask(taskId));
     }
 
 }
